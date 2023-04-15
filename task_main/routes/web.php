@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\AuthController;
-
+use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,4 +36,6 @@ Route::get('states',[AuthController::class,'getStates'])->name('states');
 Route::get('cities',[AuthController::class,'getCities'])->name('cities');
 
 Route::get('delete/{id}',[AuthController::class,'delete'])->name('delete');
-
+Route::get('view',[HomeController::class,'view'])->name('view');
+Route::post('/import',[HomeController::class,'import'])->name('import');
+Route::get('/export',[HomeController::class,'export'])->name('export');

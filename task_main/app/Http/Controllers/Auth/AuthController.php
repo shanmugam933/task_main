@@ -99,7 +99,7 @@ class AuthController extends Controller
 
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('dashboard')
+            return redirect()->intended('show')
                         ->withSuccess('You have Successfully logged In');
         }
 
@@ -241,9 +241,9 @@ class AuthController extends Controller
         $employee->empDOB = $request->input('empDOB');
         $employee->empGender = $request->input('empGender');
         $employee->empAddress = $request->input('empAddress');
-        $employee->country = $request->input('country');
-        $employee->state = $request->input('state');
-        $employee->city = $request->input('city');
+        $employee->country = "India";
+        $employee->state = "Tamil Nadu";
+        $employee->city = "Sholinghur";
         $employee->save();
 
         // $id = $request->input('id');
