@@ -37,5 +37,5 @@ Route::get('cities',[AuthController::class,'getCities'])->name('cities');
 
 Route::get('delete/{id}',[AuthController::class,'delete'])->name('delete');
 Route::get('view',[HomeController::class,'view'])->name('view');
-Route::post('/import',[HomeController::class,'import'])->name('import');
+Route::any('import', [HomeController::class, 'importData'])->name('importData');
 Route::get('/export',[HomeController::class,'export'])->name('export');

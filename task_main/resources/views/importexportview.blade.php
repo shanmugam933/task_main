@@ -7,12 +7,14 @@
     <title>Document</title>
 </head>
 <body>
-<form action="{{url('/import')}}" method="POST" enctype="multipart/form-data">
+<form action="{{url("import")}}" method="POST" enctype="multipart/form-data">
     @csrf
     <input type="file" name="file">
     <input type="submit" value="Import Data">
-    <a href="{{url('export')}}">Export Data</a>
+ 
 </form> 
+
+<a href="{{url('export')}}">Export Data</a>
     
 </body>
 </html>

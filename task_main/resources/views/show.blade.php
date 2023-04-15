@@ -190,8 +190,8 @@ $(document).ready(function(){
                     </div>
                     <div class="col-sm-7">
                         <a href=" {{ route('logout') }} " class="btn btn-secondary"><i class="material-icons">&#xE147;</i><span>Logout</span></a>
-                        <a href="#" class="btn btn-secondary"><i class="material-icons">&#xE24D;</i> <span>Import form Excel</span></a>
-                        <a href="#" class="btn btn-secondary"><i class="material-icons">&#xE24D;</i> <span>Export to Excel</span></a>
+                        <a href="{{url('/import')}}" class="btn btn-secondary"><i class="material-icons">&#xE24D;</i> <span>Import form Excel</span></a>
+                        <a href="{{url('export')}}"" class="btn btn-secondary"><i class="material-icons">&#xE24D;</i> <span>Export to Excel</span></a>
                     </div>
                 </div>
             </div>
@@ -215,7 +215,7 @@ $(document).ready(function(){
                 @foreach($employees as $employee)
                     <tr>
                         <td>{{ $employee->Employee_ID }}</td>
-                        <td><a href="#"><img src="/examples/images/avatar/1.jpg" class="avatar" alt="Avatar">{{ $employee->name }}</a></td>
+                        <td><a href="#"><img src="{{asset('image/avatar.png')}}" width="50" height="50" class="avatar" alt="Avatar"></a></td>
                         <td>{{ $employee->name }}</td>
                         <td>{{ $employee->empDOB }}</td>
                         <td>{{ $employee->email }}</td>
