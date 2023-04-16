@@ -8,18 +8,15 @@ use Illuminate\Http\Request;
 use App\Imports\UserImport;
 use App\Exports\UserExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Concerns\Importable;
 
-
-
-use Illuminate\Support\Facades\DB;
-
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-
-use PhpOffice\PhpSpreadsheet\Reader\Exception;
-
-use PhpOffice\PhpSpreadsheet\Writer\Xls;
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Exception as PhpOfficeException;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\DB;
+
+
 
 class HomeController extends Controller
 {
@@ -27,11 +24,21 @@ class HomeController extends Controller
         return view('importexportview');
     }
 
-    public function import(){
+    public function import(Request $request){
 
-        Excel::Import(new UserImport, request()->file('file'));
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv',
+        ]);
 
-         return redirect()->back();
+        $file = $request->file('file');
+
+        try {
+            Excel::import(new UserImport, $file);
+        
+            return redirect()->back()->with('success', 'Users imported successfully.');
+        } catch (\Exception $e) {
+            return "Error: " . $e->getMessage();
+        }
     }
 
     function index()
@@ -45,96 +52,57 @@ class HomeController extends Controller
     }
 
 
-    function importData(Request $request){
-
-        // $data = DB::table('users')->orderBy('id', 'DESC')->paginate(5);
-
-
+    public function importData(Request $request)
+    {
+        // Validate the uploaded file
         $this->validate($request, [
- 
             'uploaded_file' => 'required|file|mimes:xls,xlsx'
- 
         ]);
- 
- 
- 
- 
-        $the_file = $request->file('uploaded_file');
- 
-        try{
- 
+    
+        try {
+            // Load the Excel file
+            $the_file = $request->file('uploaded_file');
             $spreadsheet = IOFactory::load($the_file->getRealPath());
- 
-            $sheet        = $spreadsheet->getActiveSheet();
- 
-            $row_limit    = $sheet->getHighestDataRow();
- 
-            $column_limit = $sheet->getHighestDataColumn();
- 
-            $row_range    = range( 2, $row_limit );
- 
-            $column_range = range( 'F', $column_limit );
- 
-            $startcount = 2;
- 
- 
- 
- 
-            $data = array();
- 
- 
- 
- 
-            foreach ( $row_range as $row ) {
- 
+            $worksheet = $spreadsheet->getActiveSheet();
+            $rows = $worksheet->toArray();
+            $startcount = 1; // Starting row count in the Excel sheet
+    
+            $data = [];
+    
+            // Loop through the rows and build the data array
+            foreach ($rows as $row) {
+                if ($startcount == 1) {
+                    // Skip the first row (header row)
+                    $startcount++;
+                    continue;
+                }
                 $data[] = [
- 
-                    'Employee_ID' =>$sheet->getCell( 'A' . $row )->getValue(),
- 
-                    'name' => $sheet->getCell( 'B' . $row )->getValue(),
- 
-                    'empDOB' => $sheet->getCell( 'C' . $row )->getValue(),
- 
-                    'email' => $sheet->getCell( 'D' . $row )->getValue(),
- 
-                    'password' => $sheet->getCell( 'E' . $row )->getValue(),
- 
-                    'empGender' =>$sheet->getCell( 'F' . $row )->getValue(),
-
-                    'empAddress' =>$sheet->getCell( 'G' . $row )->getValue(),
- 
-                    'Country' =>$sheet->getCell( 'H' . $row )->getValue(),
- 
-                    'State' =>$sheet->getCell( 'I' . $row )->getValue(),
-
-                    'City' =>$sheet->getCell( 'J' . $row )->getValue(),
+                    'Employee_ID' => $row[0],
+                    'name' => $row[1],
+                    'empDOB' => $row[2],
+                    'email' => $row[3],
+                    'password' => $row[4],
+                    'empGender' => $row[5],
+                    'empAddress' => $row[6],
+                    'Country' => $row[7],
+                    'State' => $row[8],
+                    'City' => $row[9],
                 ];
- 
                 $startcount++;
- 
             }
- 
- 
- 
- 
+    
+            // Insert data into the database
             DB::table('users')->insert($data);
- 
-        } catch (Exception $e) {
- 
+    
+            return back()->withSuccess('Great! Data has been successfully uploaded.');
+        } catch (PhpOfficeException $e) {
             $error_code = $e->errorInfo[1];
- 
-            // echo $error_code;
- 
- 
+            // Handle exception and show appropriate error message
             return back()->withErrors('There was a problem uploading the data!');
- 
+        } catch (ValidationException $e) {
+            // Handle validation exception and show appropriate error message
+            return back()->withErrors($e->validator);
         }
- 
-        // return back()->withSuccess('Great! Data has been successfully uploaded.');
- 
- 
- 
- 
     }
  
  

@@ -190,7 +190,7 @@ $(document).ready(function(){
                     </div>
                     <div class="col-sm-7">
                         <a href=" {{ route('logout') }} " class="btn btn-secondary"><i class="material-icons">&#xE147;</i><span>Logout</span></a>
-                        <a href="{{url('/import')}}" class="btn btn-secondary"><i class="material-icons">&#xE24D;</i> <span>Import form Excel</span></a>
+                        <a href="{{url('/importview')}}" class="btn btn-secondary"><i class="material-icons">&#xE24D;</i> <span>Import form Excel</span></a>
                         <a href="{{url('export')}}"" class="btn btn-secondary"><i class="material-icons">&#xE24D;</i> <span>Export to Excel</span></a>
                     </div>
                 </div>

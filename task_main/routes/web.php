@@ -15,7 +15,7 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('login', [AuthController::class, 'index'])->name('login');
+Route::get('/', [AuthController::class, 'index'])->name('login');
 Route::post('post-login', [AuthController::class, 'postLogin'])->name('login.post');
 Route::get('registration', [AuthController::class, 'registration'])->name('register');
 Route::post('post-registration', [AuthController::class, 'postRegistration'])->name('register.post');
@@ -37,5 +37,5 @@ Route::get('cities',[AuthController::class,'getCities'])->name('cities');
 
 Route::get('delete/{id}',[AuthController::class,'delete'])->name('delete');
 Route::get('view',[HomeController::class,'view'])->name('view');
-Route::any('import', [HomeController::class, 'importData'])->name('importData');
+Route::any('import', [HomeController::class, 'import'])->name('importData');
 Route::get('/export',[HomeController::class,'export'])->name('export');
