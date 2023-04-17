@@ -12,6 +12,9 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
 <style>
 body {
     color: #566787;
@@ -181,6 +184,30 @@ $(document).ready(function(){
 </head>
 <body>
 <div class="container-fluid">
+    <!-- Modal for importing data from Excel -->
+        <div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="importModalLabel">Import from Excel</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                <!-- Form for uploading Excel file -->
+                <form action="{{url("import")}}" method="POST" enctype="multipart/form-data">
+                    <!-- Add any additional form fields here if needed -->
+                    @csrf <!-- Add CSRF token for security -->
+                    <input type="file" name="file">
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                </form>
+                </div>
+            </div>
+            </div>
+        </div>
+
+
     <div class="table-responsive">
         <div class="table-wrapper">
             <div class="table-title">
@@ -190,7 +217,9 @@ $(document).ready(function(){
                     </div>
                     <div class="col-sm-7">
                         <a href=" {{ route('logout') }} " class="btn btn-secondary"><i class="material-icons">&#xE147;</i><span>Logout</span></a>
-                        <a href="{{url('/importview')}}" class="btn btn-secondary"><i class="material-icons">&#xE24D;</i> <span>Import form Excel</span></a>
+                        <a href="#" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#importModal">
+                            <i class="material-icons">&#xE24D;</i> <span>Import from Excel</span>
+                          </a>
                         <a href="{{url('export')}}"" class="btn btn-secondary"><i class="material-icons">&#xE24D;</i> <span>Export to Excel</span></a>
                     </div>
                 </div>
@@ -221,9 +250,9 @@ $(document).ready(function(){
                         <td>{{ $employee->email }}</td>
                         <td>{{ $employee->empGender }}</td>
                         <td>{{ $employee->empAddress }}</td>
-                        <td>{{ $employee->Country }}</td>
-                        <td>{{ $employee->State }}</td>
-                        <td>{{ $employee->City }}</td>
+                        <td>{{ $employee->country }}</td>
+                        <td>{{ $employee->state }}</td>
+                        <td>{{ $employee->city }}</td>
                         <td>
                             <a href="edit/{{$employee->id}}" class="settings" title="Update" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
                             <a href="delete/{{$employee->id}}" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
@@ -268,6 +297,10 @@ $(document).ready(function(){
                 }
             });
         });
+
+
+
+
     });
     </script>
 

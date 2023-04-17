@@ -30,18 +30,48 @@ class UserImport implements ToModel
     }
     public function model(array $row)
     {
-        return new User([
-            'Employee_ID' => $row[0],
-            'name' => $row[1],
-            'empDOB' => $row[2],
-            'email' => $row[3],
-            'password' => $row[4],
-            'empGender' => $row[5],
-            'empAddress' => $row[6],
-            'Country' => 'India',
-            'State' => 'Tamil Nadu',
-            'City' => 'Sholinghur',
-            'remember' => 'Sholinghur',
-        ]);
+
+
+        $count = NULL;
+
+        $count = User::where('id',$row[0])->first();
+
+            if(isset($count)) {
+
+                User::where('id', $row[0])
+                        ->update([
+                            'Employee_ID' => $row[1],
+                            'name' => $row[2],
+                            'empDOB' => $row[3],
+                            'email' => $row[4],
+                            'password' => isset($row[5]) ? $row[5] : '123456',
+                            'empGender' => $row[6],
+                            'empAddress' => $row[7],
+                            'country' => $row[8],
+                            'state' => $row[9],
+                            'city' => $row[10],
+                            'remember' => $row[11]
+                        ]);
+                return;
+
+                // Number extracted from Employee_ID: 24585
+
+            }
+            else {
+
+                return new User([
+                    'Employee_ID' => $row[1],
+                    'name' => $row[2],
+                    'empDOB' => $row[3],
+                    'email' => $row[4],
+                    'password' => isset($row[5]) ? $row[5] : '123456',
+                    'empGender' => $row[6],
+                    'empAddress' => $row[7],
+                    'country' => $row[8],
+                    'state' => $row[9],
+                    'city' => $row[10],
+                    'remember' => $row[11]
+                ]);
+        }
     }
 }

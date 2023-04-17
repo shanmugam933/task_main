@@ -234,64 +234,46 @@ class AuthController extends Controller
 
     public function update(Request $request,$id){
 
+        $selectCountry = DB::table('countries')
+        ->where('id', $request->input("country"))
+        ->get()
+        ->first();
+
+        $selectState = DB::table('states')
+                ->where('id', $request->input("state"))
+                ->get()
+                ->first();
+        $selectCity   = DB::table('cities')
+                ->where('id', $request->input("city"))
+                ->get()
+                ->first();
 
         $employee = User::find($id);
         $employee->name = $request->input('Employee_ID');
         $employee->name = $request->input('name');
         $employee->empDOB = $request->input('empDOB');
+        $employee->email = $request->input('email');
         $employee->empGender = $request->input('empGender');
+        $employee->password = $request->input('password');
         $employee->empAddress = $request->input('empAddress');
-        $employee->country = "India";
-        $employee->state = "Tamil Nadu";
-        $employee->city = "Sholinghur";
+        $employee->country = $selectCountry->name;
+        $employee->state = $selectState->name;
+        $employee->city = $selectCity->name;
         $employee->save();
-
-        // $id = $request->input('id');
-
-        // $details = DB::select('select * from users where id = ?', [$id]);
-
-        // $Employee_ID = $request->input('Employee_ID');
-        // $name = $request->input('name');
-        // $dob = $request->input('empDOB');
-        // $email = $request->input('email');
-        // $dob = $request->input('empDOB');
-        // $gender = $request->input('empGender');
-        // $address = $request->input('empAddress');
-        // $country = $request->input('Country');
-        // $state = $request->input('State');
-        // $city = $request->input('City');
-        // DB::update('update users set Employee_ID=?, name=?, empDOB=?, email=?, empGender=?, empAddress=?, Country=?, State=?, City=? where id=?',
-        // [$Employee_ID, $name, $dob, $email, $gender, $address, $country, $state, $city, $id]);
-
-        // // DB::table('users')
-        // // ->where('id', $id)
-        // // ->update([
-        // //     'Employee_ID' => 3459,
-        // //     'name' => $name,
-        // //     'empDOB' => $dob,
-        // //     'email' => $email,
-        // //     'empGender' => $gender,
-        // //     'empAddress' => $address,
-        // //     'country' => $country,
-        // //     'state' => $state,
-        // //     'city' => $city
-        // // ]);
-
-        // // return redirect()->back()->with('status','Details Updated Successfully');
-
          return 'User Updated Successfully <a href="' . route('show') . '">Click here to see</a>';
     }
-
     public function delete($id){
+
         $User = User::find($id);
         $User->delete();
+    
 
     }
-
     public function logout() {
+
         Session::flush();
         Auth::logout();
-
         return Redirect('login');
+
     }
 }

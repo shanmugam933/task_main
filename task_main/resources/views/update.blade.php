@@ -6,14 +6,14 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card body-image" style="padding-bottom: 50px">
-                    <div class="card-header" style="color:cornsilk;background-color: rgba(255, 68, 68, 0.548);font-size:25px"><strong>Register</strong></div>
+                    <div class="card-header" style="color:cornsilk;background-color: rgba(0, 0, 0, 0.548);font-size:25px"><strong>Update Employee</strong></div>
                     <div class="card-body" style="color:cornsilk;font-weight:bold;font-size:20px">
 
                         <form action="{{url('update/'.$employee->id)}}" method="POST">
                             @csrf
 
 
-                                <div class="form-group row">
+                                {{-- <div class="form-group row">
                                     <label for="Employee_ID" class="col-md-4 col-form-label text-md-right">Employee ID</label>
                                     <div class="col-md-6 ">
                                         <div class="input-group">
@@ -24,12 +24,12 @@
                                             @endif
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="form-group row">
                                     <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
                                     <div class="col-md-6 ">
-                                        <input type="text" id="name" class="form-control" name="name" required autofocus>
+                                        <input type="text" id="name" class="form-control" value="{{$employee->name}}" name="name" required autofocus>
                                         @if ($errors->has('name'))
                                         <span class="text-danger">{{ $errors->first('name') }}</span>
                                         @endif
@@ -39,7 +39,7 @@
                                 <div class="form-group row">
                                     <label for="empDOB" class="col-md-4 col-form-label text-md-right">DOB</label>
                                     <div class="col-md-6">
-                                        <input type="date" class="form-control" autocomplete="off" name="empDOB" id="empDOB" required>
+                                        <input type="date" class="form-control" value="{{$employee->empDOB}}" autocomplete="off" name="empDOB" id="empDOB" required>
                                         {{-- <input type="text" id="DOB" class="form-control" name="DOB" required> --}}
                                         @if ($errors->has('empDOB'))
                                         <span class="text-danger">{{ $errors->first('empDOB') }}</span>
@@ -51,7 +51,7 @@
                                     <label for="email_address" class="col-md-4 col-form-label text-md-right">E-Mail
                                         Address</label>
                                     <div class="col-md-6">
-                                        <input type="text" id="email_address" class="form-control" name="email" required
+                                        <input type="text" id="email_address" value="{{$employee->email}}" class="form-control" name="email" required
                                             autofocus>
                                         @if ($errors->has('email'))
                                         <span class="text-danger">{{ $errors->first('email') }}</span>
@@ -64,14 +64,14 @@
                                 <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
 
                                 <div class="col-md-2" >
-                                        <input type="password"  style="width: 130%" class="form-control" id="password" name="password" required />
+                                        <input type="password"  style="width: 130%" value="{{$employee->password}}" class="form-control" id="password" name="password" required />
                                         <p style="color:rgba(235, 10, 10, 0.877); font-size: 15px">min 6 characters</p>
                                 </div>
                                 <div class="col-md-1" >
-                                    <label for="Confirm" style="padding-left: 20px" class="col-form-label">Confirm</label>
+                                    <label for="Confirm" style="padding-left: 4px" class="col-form-label">Confirm</label>
                                 </div>
                                 <div class="col-md-3" style="padding-left: 30px;width:100%">
-                                    <input type="password" id="confirm" style="padding-left: 20px;width:100%" class="form-control" name="Confirm" required>
+                                    <input type="password" id="confirm" value="{{$employee->password}}" style="padding-left: 20px;width:100%" class="form-control" name="Confirm" required>
 
                                     @if ($errors->has('Confirm'))
                                     <span class="text-danger">{{ $errors->first('Confirm') }}</span>
@@ -109,7 +109,7 @@
                         <div class="col-md-6">
                             {{-- <label for="empAddressLabel" class="form-label">Address</label> --}}
                             <textarea class="form-control" autocomplete="off" name="empAddress" id="empAddress"
-                                rows="4"></textarea>
+                                rows="4">{{$employee->empAddress}}</textarea>
                         </div>
                     </div>
 
@@ -156,7 +156,7 @@
 
                 <div class="col-md-6 offset-md-4">
                     <button type="submit" href="login" class="btn btn-primary">
-                        Register
+                        Update
                     </button>
                 </div>
             </form>
@@ -200,6 +200,7 @@
                 }
             });
         });
+
     });
 </script>
 

@@ -10,6 +10,7 @@ use App\Exports\UserExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\Importable;
 
+use App\Models\User;
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Exception as PhpOfficeException;
@@ -34,31 +35,39 @@ class HomeController extends Controller
 
         try {
             Excel::import(new UserImport, $file);
-        
+
             return redirect()->back()->with('success', 'Users imported successfully.');
+
         } catch (\Exception $e) {
-            return "Error: " . $e->getMessage();
+
+            if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
+
+            // Extract the duplicate email from the error message
+                preg_match("/for key 'users_email_unique'.+values \(([^)]+)/", $e->getMessage(), $matches);
+                $duplicateEmail = $matches[1];
+                $employees  =   User::all();
+                // Return the duplicate email as the error message
+                $errorMsg = "Error: Duplicate entry for email: " . $duplicateEmail;
+                return view('showerror',['errorMsg' => $errorMsg]);
+
+            } else {
+                return "Error: " . $e->getMessage();
+            }
+
         }
     }
 
     function index()
-
     {
- 
-       
- 
         return view('show', compact('data'));
- 
     }
-
-
     public function importData(Request $request)
     {
         // Validate the uploaded file
         $this->validate($request, [
             'uploaded_file' => 'required|file|mimes:xls,xlsx'
         ]);
-    
+
         try {
             // Load the Excel file
             $the_file = $request->file('uploaded_file');
@@ -66,9 +75,9 @@ class HomeController extends Controller
             $worksheet = $spreadsheet->getActiveSheet();
             $rows = $worksheet->toArray();
             $startcount = 1; // Starting row count in the Excel sheet
-    
+
             $data = [];
-    
+
             // Loop through the rows and build the data array
             foreach ($rows as $row) {
                 if ($startcount == 1) {
@@ -90,10 +99,10 @@ class HomeController extends Controller
                 ];
                 $startcount++;
             }
-    
+
             // Insert data into the database
             DB::table('users')->insert($data);
-    
+
             return back()->withSuccess('Great! Data has been successfully uploaded.');
         } catch (PhpOfficeException $e) {
             $error_code = $e->errorInfo[1];
@@ -104,9 +113,9 @@ class HomeController extends Controller
             return back()->withErrors($e->validator);
         }
     }
- 
- 
- 
+
+
+
 
     public function export(){
         //  Excel::Import(new UserImport, request()->file('file'));
