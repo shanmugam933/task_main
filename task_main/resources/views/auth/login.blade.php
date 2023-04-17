@@ -44,6 +44,9 @@
                                           <input type="checkbox" name="remember"> Remember Me
                                       </label>
                                   </div>
+                                  <div class="checkbox">
+                                        <a href="{{route('showForgot')}}" style="color:white">Forget Password?</a>
+                                  </div>
                               </div>
                           </div>
 

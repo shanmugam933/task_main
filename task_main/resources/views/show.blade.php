@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Bootstrap User Management Data Table</title>
+<title>Employes</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -216,11 +216,14 @@ $(document).ready(function(){
                         <h2>Employee <b>Management</b></h2>
                     </div>
                     <div class="col-sm-7">
-                        <a href=" {{ route('logout') }} " class="btn btn-secondary"><i class="material-icons">&#xE147;</i><span>Logout</span></a>
+                        
+                        <a href=" {{ route('logout') }} " class="btn btn-secondary"><i class="material-icons">&#xE8AC;</i><span>Logout</span></a>
+
                         <a href="#" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#importModal">
-                            <i class="material-icons">&#xE24D;</i> <span>Import from Excel</span>
+                            <i class="material-icons">&#xE2C3;</i> <span>Import from Excel</span>
                           </a>
                         <a href="{{url('export')}}"" class="btn btn-secondary"><i class="material-icons">&#xE24D;</i> <span>Export to Excel</span></a>
+                        <a href="/registration" class="btn btn-secondary"><i class="material-icons">&#xE147;</i><span>Add new employe</span></a>
                     </div>
                 </div>
             </div>
@@ -254,7 +257,7 @@ $(document).ready(function(){
                         <td>{{ $employee->state }}</td>
                         <td>{{ $employee->city }}</td>
                         <td>
-                            <a href="edit/{{$employee->id}}" class="settings" title="Update" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+                            <a href="edit/{{$employee->id}}" class="settings" title="Update" data-toggle="tooltip"><i class="material-icons">&#xE864;</i></a>
                             <a href="delete/{{$employee->id}}" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
                         </td>
                     </tr>

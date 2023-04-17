@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,12 @@ use App\Http\Controllers\HomeController;
 
 Route::get('/', [AuthController::class, 'index'])->name('login');
 Route::get('/login', [AuthController::class, 'index'])->name('login');
+
+Route::get('forgot-password', [ForgotPasswordController::class, 'showForgot'])->name('showForgot');
+Route::post('forgot-password', [ForgotPasswordController::class, 'submitForgot'])->name('submitForgot');
+Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showReset'])->name('showReset');
+Route::post('submit-password', [ForgotPasswordController::class, 'submitReset'])->name('submitReset');
+
 Route::post('post-login', [AuthController::class, 'postLogin'])->name('login.post');
 Route::get('registration', [AuthController::class, 'registration'])->name('register');
 Route::post('post-registration', [AuthController::class, 'postRegistration'])->name('register.post');

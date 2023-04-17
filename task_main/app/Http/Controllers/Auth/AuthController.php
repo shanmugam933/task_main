@@ -195,7 +195,7 @@ class AuthController extends Controller
         'country' => $data['country'],
         'state' => $data['state'],
         'city' => $data['city'],
-        'password' => Hash::make($data['password']),
+        'password' => $data['password'],
         'remember' => $data['remember']
       ]);
     }
