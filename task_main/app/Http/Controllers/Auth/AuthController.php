@@ -22,6 +22,7 @@ class AuthController extends Controller
     public function index()
     {
         return view('auth.login');
+
     }
 
     /**
@@ -90,6 +91,23 @@ class AuthController extends Controller
      *
      * @return response()
      */
+
+    // public function postLogin(Request $request)
+    // {
+    //     $request->validate([
+    //         'email' => 'required',
+    //         'password' => 'required',
+    //     ]);
+
+    //     $credentials = $request->only('email', 'password');
+    //     if (Auth::attempt($credentials)) {
+    //         return redirect()->intended('show')
+    //                     ->withSuccess('You have Successfully logged In');
+    //     }
+
+    //         return redirect('login')->with('failed','Oppes! You have entered invalid credentials');
+    // }
+
     public function postLogin(Request $request)
     {
         $request->validate([
@@ -99,12 +117,12 @@ class AuthController extends Controller
 
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('show')
-                        ->withSuccess('You have Successfully logged In');
+            return redirect()->intended('show')->withSuccess('You have Successfully logged In');
         }
 
-            return redirect('login')->with('failed','Oppes! You have entered invalid credentials');
+        return redirect('login')->with('failed','Oppes! You have entered invalid credentials');
     }
+
 
     /**
      * Write code on Method
@@ -195,7 +213,7 @@ class AuthController extends Controller
         'country' => $data['country'],
         'state' => $data['state'],
         'city' => $data['city'],
-        'password' => $data['password'],
+        'password' => Hash::make($data['password']),
         'remember' => $data['remember']
       ]);
     }
@@ -266,7 +284,7 @@ class AuthController extends Controller
 
         $User = User::find($id);
         $User->delete();
-    
+
 
     }
     public function logout() {

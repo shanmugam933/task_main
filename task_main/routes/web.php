@@ -21,8 +21,15 @@ Route::get('/login', [AuthController::class, 'index'])->name('login');
 
 Route::get('forgot-password', [ForgotPasswordController::class, 'showForgot'])->name('showForgot');
 Route::post('forgot-password', [ForgotPasswordController::class, 'submitForgot'])->name('submitForgot');
-Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showReset'])->name('showReset');
+
+// Route::get('/reset-password/{token}', function (string $token) {
+//     return view('auth.reset-password', ['token' => $token]);
+// })->name('submitForgot');
+
+
+Route::get('auth.ForgotPasswordLink/{token}', [ForgotPasswordController::class, 'showReset'])->name('showReset');
 Route::post('submit-password', [ForgotPasswordController::class, 'submitReset'])->name('submitReset');
+
 
 Route::post('post-login', [AuthController::class, 'postLogin'])->name('login.post');
 Route::get('registration', [AuthController::class, 'registration'])->name('register');
