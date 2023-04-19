@@ -87,17 +87,17 @@
                         <div class="col-md-6" style="padding-top: 7px">
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="empGender" id="Male" value="Male"
-                                    required>
+                                    required @if($employee->empGender == 'Male') checked @endif>
                                 <span class="form-check-label" for="inlineRadio1">Male</span>
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="empGender" id="Female"
-                                    value="Female">
+                                    value="Female" @if($employee->empGender == 'Female') checked @endif>
                                 <span class="form-check-label" for="inlineRadio2">Female</span>
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="empGender" id="Other"
-                                    value="Others">
+                                    value="Others" @if($employee->empGender == 'Others') checked @endif>
                                 <span class="form-check-label" for="inlineRadio3">Others</span>
                             </div>
                         </div>
@@ -129,6 +129,7 @@
                         <label for="Address" class="col-md-4 col-form-label text-md-right">State</label>
                         <div class="col-md-6">
                             <select name ="state" class="form-control"  id="state">
+                                {{-- <option selected>Tamil Nadu</option> --}}
                             </select>
 
                         </div>
@@ -144,7 +145,7 @@
 
                 </div>
 
-                <div class="form-group row">
+                {{-- <div class="form-group row">
                     <div class="col-md-6 offset-md-4">
                         <div class="checkbox" style="color:cornsilk;font-weight:bold;font-size:14px">
                             <label>
@@ -152,10 +153,10 @@
                             </label>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="col-md-6 offset-md-4">
-                    <button type="submit" href="login" class="btn btn-primary">
+                    <button type="submit" id="update-btn" href="login" class="btn btn-primary">
                         Update
                     </button>
                 </div>
@@ -200,6 +201,32 @@
                 }
             });
         });
+
+        $('form').submit(function(e) {
+            e.preventDefault(); // prevent default form submission
+            var url = $(this).attr('action'); // get the form action url
+            var formData = $(this).serialize(); // serialize the form data
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                success: function(data) {
+                    // Show toastr notification
+                    
+                    toastr.success('Employee updated successfully', 'Success');
+                
+                    // Redirect to previous page
+                    setTimeout(function() {
+                       window.location.href = document.referrer;
+                    }, 1500);
+
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
+
 
     });
 </script>

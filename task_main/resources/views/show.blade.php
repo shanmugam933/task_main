@@ -93,7 +93,7 @@ table.table-striped.table-hover tbody tr:hover {
 }
 table.table th i {
     font-size: 13px;
-    margin: 0 5px;
+    margin: 0 3px;
     cursor: pointer;
 }
 table.table td:last-child i {
@@ -264,6 +264,7 @@ $(document).ready(function(){
                         <td>
                             <a href="edit/{{$employee->id}}" class="settings" title="Update" data-toggle="tooltip"><i class="material-icons">&#xE864;</i></a>
                             <a href="delete/{{$employee->id}}" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
+                            <a href="PDF/{{$employee->id}}" class="PDF" title="Print-PDF" data-toggle="tooltip"><i class="material-icons">&#xE2C4;</i></a>
                         </td>
                     </tr>
                     @endforeach

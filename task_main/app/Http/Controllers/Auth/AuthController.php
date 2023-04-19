@@ -9,8 +9,11 @@ use Illuminate\Support\Facades\Http;
 use Session;
 use App\Models\User;
 use App\Models\Countries;
+use Brian2694\Toastr\Facades\Toastr;
+// use Toastr;
 use Hash;
 use DB;
+use PDF;
 
 class AuthController extends Controller
 {
@@ -279,7 +282,11 @@ class AuthController extends Controller
         $employee->city = $selectCity->name;
         $employee->save();
 
-        return 'User Updated Successfully <a href="' . route('show') . '">Click here to see</a>';
+        Toastr::success('Employee updated successfully', 'Success');
+        // return "updated";
+        // return 'User Updated Successfully <a href="' . route('show') . '">Click here to see</a>';
+        return redirect()->route('show');
+
     }
     public function delete($id){
 
@@ -288,6 +295,37 @@ class AuthController extends Controller
 
 
     }
+    public function PDF($id) {
+        // retreive all records from db
+        // $data = User::find($id);
+        // // share data to view
+        // view()->share('users',$data);
+        // $pdf = PDF::loadView('pdf_view', $data);
+    
+        // return $pdf->download('pdf_file.pdf');
+
+        $data = DB::table('users')
+                    ->where('id', $id)
+                    ->get()
+                    ->first();
+
+        $print_data = [
+            'Employee_ID'         => $data->Employee_ID,
+            'name'        => $data->name,
+            'empDOB'        => $data->empDOB,
+            'email'        => $data->email,
+            'empGender'        => $data->empGender,
+            'empAddress'         => $data->empAddress,
+            'country'         => $data->country,
+            'state'         => $data->state,
+            'city'         => $data->city
+        
+        ];
+        $pdf = PDF::loadView('PDF', $print_data);
+        return $pdf->download($data->Employee_ID."_".$data->name.'.pdf');
+
+
+      }
     public function logout() {
 
         Session::flush();
