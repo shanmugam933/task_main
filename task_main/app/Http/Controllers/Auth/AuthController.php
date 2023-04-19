@@ -272,13 +272,14 @@ class AuthController extends Controller
         $employee->empDOB = $request->input('empDOB');
         $employee->email = $request->input('email');
         $employee->empGender = $request->input('empGender');
-        $employee->password = $request->input('password');
+        $employee->password = Hash::make($request->input('password'));
         $employee->empAddress = $request->input('empAddress');
         $employee->country = $selectCountry->name;
         $employee->state = $selectState->name;
         $employee->city = $selectCity->name;
         $employee->save();
-         return 'User Updated Successfully <a href="' . route('show') . '">Click here to see</a>';
+
+        return 'User Updated Successfully <a href="' . route('show') . '">Click here to see</a>';
     }
     public function delete($id){
 

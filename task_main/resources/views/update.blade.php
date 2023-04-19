@@ -117,7 +117,7 @@
                         <label for="Address" class="col-md-4 col-form-label text-md-right">Country</label>
                         <div class="col-md-6">
                             <select name="country" class="form-control" id="country">
-                                <option selected disabled>Select country</option>
+                                <option selected>{{$employee->country}}</option>
                                 @foreach ($countries as $country)
                                 <option value="{{ $country->id }}">{{ $country->name }}</option>
                                 @endforeach
@@ -169,7 +169,7 @@
 </main>
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#country').on('change', function () {
+         $('#country').on('change', function () {
             var countryId = this.value;
             $('#state').html('');
             $.ajax({

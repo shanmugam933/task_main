@@ -13,6 +13,11 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<link rel="stylesheet" href="http://demo.itsolutionstuff.com/plugin/bootstrap-3.min.css">
+<script src="http://demo.itsolutionstuff.com/plugin/jquery.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 <style>
@@ -216,7 +221,7 @@ $(document).ready(function(){
                         <h2>Employee <b>Management</b></h2>
                     </div>
                     <div class="col-sm-7">
-                        
+
                         <a href=" {{ route('logout') }} " class="btn btn-secondary"><i class="material-icons">&#xE8AC;</i><span>Logout</span></a>
 
                         <a href="#" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#importModal">
@@ -281,22 +286,21 @@ $(document).ready(function(){
         // Extract the id from the URL
         var id = url.split('/').pop();
 
-            console.log(id);
+
             // Send DELETE request to the server
             $.ajax({
                 url: '/delete/' + id, // Update with your actual URL
                 type: 'GET',
                 data: {id: id}, // Update with your actual data
                 success: function(response) {
-                    // Handle success response
-                    alert('Employee deleted successfully!');
-                    location.reload();
-                    // Update the page dynamically, for example, by removing the deleted employee from the view
-                    // $(this).closest('.employee').remove();
-                },
+                    swal( "Employee record","Deleted Successfully!", "success");
+                      setTimeout(function() {
+                            location.reload();
+                        }, 2000);
+                    },
                 error: function(error) {
-                    // Handle error response
-                    alert('Error deleting employee: ' + error);
+                    // alert('Error deleting employee: ' + error);
+                    swal("Problem in deleting", "Cannot able to delete", "error");
                 }
             });
         });
