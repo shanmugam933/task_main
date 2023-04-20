@@ -301,7 +301,7 @@ class AuthController extends Controller
         // // share data to view
         // view()->share('users',$data);
         // $pdf = PDF::loadView('pdf_view', $data);
-    
+
         // return $pdf->download('pdf_file.pdf');
 
         $data = DB::table('users')
@@ -310,6 +310,8 @@ class AuthController extends Controller
                     ->first();
 
         $print_data = [
+
+            
             'Employee_ID'         => $data->Employee_ID,
             'name'        => $data->name,
             'empDOB'        => $data->empDOB,
@@ -319,7 +321,7 @@ class AuthController extends Controller
             'country'         => $data->country,
             'state'         => $data->state,
             'city'         => $data->city
-        
+
         ];
         $pdf = PDF::loadView('PDF', $print_data);
         return $pdf->download($data->Employee_ID."_".$data->name.'.pdf');

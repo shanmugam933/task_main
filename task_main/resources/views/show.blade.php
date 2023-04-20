@@ -262,9 +262,11 @@ $(document).ready(function(){
                         <td>{{ $employee->state }}</td>
                         <td>{{ $employee->city }}</td>
                         <td>
-                            <a href="edit/{{$employee->id}}" class="settings" title="Update" data-toggle="tooltip"><i class="material-icons">&#xE864;</i></a>
-                            <a href="delete/{{$employee->id}}" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
-                            <a href="PDF/{{$employee->id}}" class="PDF" title="Print-PDF" data-toggle="tooltip"><i class="material-icons">&#xE2C4;</i></a>
+                            <div class="d-flex">
+                                <a href="edit/{{$employee->id}}" class="settings" title="Update" data-toggle="tooltip"><i class="material-icons">&#xE864;</i></a>
+                                <a href="delete/{{$employee->id}}" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
+                                <a href="PDF/{{$employee->id}}" class="PDF" title="Print-PDF" data-toggle="tooltip"><i class="material-icons">&#xE2C4;</i></a>
+                            </div>
                         </td>
                     </tr>
                     @endforeach

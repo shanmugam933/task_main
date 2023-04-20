@@ -20,13 +20,13 @@
                 margin: 0;
                 padding: 0;
             }
-    
+
             .container {
                 margin: 0 auto;
                 max-width: 800px;
                 padding: 50px;
             }
-    
+
             h1 {
                 color: #555;
                 font-size: 36px;
@@ -34,14 +34,14 @@
                 margin-bottom: 30px;
                 text-align: center;
             }
-    
+
             table {
                 background-color: #FFF;
                 border-collapse: collapse;
                 margin: 0 auto;
                 width: 100%;
             }
-    
+
             td {
                 border: 1px solid #DDD;
                 font-size: 18px;
@@ -49,30 +49,36 @@
                 text-align: left;
                 vertical-align: middle;
             }
-    
+
             td:first-child {
                 font-weight: 600;
                 width: 200px;
             }
-    
+
             .gender {
                 display: flex;
                 align-items: center;
             }
-    
+
             .gender label {
                 margin-right: 10px;
             }
-    
+
             .male {
                 background-color: #4CAF50;
                 color: #FFF;
                 padding: 5px 10px;
                 border-radius: 5px;
             }
-    
+
             .female {
                 background-color: #F44336;
+                color: #FFF;
+                padding: 5px 10px;
+                border-radius: 5px;
+            }
+            .others{
+                background-color: #9e36f4;
                 color: #FFF;
                 padding: 5px 10px;
                 border-radius: 5px;
@@ -100,6 +106,7 @@
                             <div class="gender">
                                 <label class="male">{{ $empGender === 'Male' ? 'Male' : '' }}</label>
                                 <label class="female">{{ $empGender === 'Female' ? 'Female' : '' }}</label>
+                                <label class="others">{{ $empGender === 'Others' ? 'Others' : '' }}</label>
                             </div>
                         </td>
                     </tr>

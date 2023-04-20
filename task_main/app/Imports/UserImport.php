@@ -34,11 +34,11 @@ class UserImport implements ToModel
 
         $count = NULL;
 
-        $count = User::where('id',$row[0])->first();
+        $count = User::where('Employee_ID',$row[1])->first();
 
             if(isset($count)) {
 
-                User::where('id', $row[0])
+                User::where('Employee_ID', $row[1])
                         ->update([
                             'Employee_ID' => $row[1],
                             'name' => $row[2],
